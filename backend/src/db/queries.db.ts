@@ -101,8 +101,6 @@ export async function deleteProduct(id:string) {
     return product;
 }
 
-
-
 //Comment Queries
 export async function createComment(data:NewComment) {
     const [comment] = await db.insert(comments).values(data).returning();
