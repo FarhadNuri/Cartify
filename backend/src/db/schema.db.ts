@@ -7,7 +7,7 @@ export const users = pgTable("users", {
     name: text("name"),
     imageUrl: text("image_url"),
     createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
-    updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow().$onUpdate(() => new Date()),
 
 });
 
@@ -19,7 +19,7 @@ export const products = pgTable("products", {
     userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
     // cascade = deletes products if user is deleted
     createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
-    updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow().$onUpdate(() => new Date()),
 });
 
 export const comments = pgTable("comments", {
@@ -29,7 +29,7 @@ export const comments = pgTable("comments", {
     // cascade = deletes comments if user is deleted
     productId: uuid("product_id").notNull().references(() => products.id, { onDelete: "cascade" }),
     // cascade = deletes comments if product is deleted
-    createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+    createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow()
 });
 
 
