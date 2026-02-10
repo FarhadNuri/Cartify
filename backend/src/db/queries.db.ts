@@ -21,13 +21,26 @@ export async function updateUser(id:string, data: Partial<NewUser>) {
 }
 
 //upsert = update if exists, else create
-export const upsertUser = async (data: NewUser) => {
-    const existingUser = await getUserById(data.id);
-    if (existingUser) {
-        return updateUser(data.id, data);
-    } else {
-        return createUser(data);
-    }
+// export const upsertUser = async (data: NewUser) => {
+//     const existingUser = await getUserById(data.id);
+//     if (existingUser) {
+//         return updateUser(data.id, data);
+//     } else {
+//         return createUser(data);
+//     }
+// }
+
+export async function upsertUser(data: NewUser) {
+    const [user] = await db.insert(users).values(data).onConflictDoUpdate({
+        target: users.id,
+        set: {
+            email: data.email,
+            name: data.name,
+            imageUrl: data.imageUrl,
+            updatedAt: new Date(),
+        },
+    }).returning();
+    return user;    
 }
 
 // Product Queries
