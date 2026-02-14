@@ -14,17 +14,6 @@ app.use(clerkMiddleware())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-  res.json({ message: 'Hello, World!' ,
-    endpoints: {
-        users: '/api/users',
-        products: '/api/products',
-        orders: '/api/orders',
-        comments: '/api/comments'
-    }
-  });
-});
-
 app.use("/api/users",userRoutes)
 app.use("/api/products",productRoutes)
 app.use("/api/comments",commentRoutes)
@@ -39,7 +28,18 @@ if (ENV.NODE_ENV === "production") {
   app.get("/{*any}", (req, res) => {
     res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
   });
-
+} else {
+  // Development API info endpoint
+  app.get('/', (req, res) => {
+    res.json({ message: 'Hello, World!' ,
+      endpoints: {
+          users: '/api/users',
+          products: '/api/products',
+          orders: '/api/orders',
+          comments: '/api/comments'
+      }
+    });
+  });
 }
 
 app.listen(ENV.PORT, () => {
