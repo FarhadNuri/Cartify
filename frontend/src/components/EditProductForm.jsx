@@ -10,7 +10,7 @@ function EditProductForm({ product, isPending, isError, onSubmit }) {
   });
 
   return (
-    <div className="max-w-lg mx-auto">
+    <div className="max-w-3xl w-full mx-auto px-4 py-16 min-h-[700px]">
       <Link to="/profile" className="btn btn-ghost btn-sm gap-1 mb-4">
         <ArrowLeftIcon className="size-4" /> Back
       </Link>
@@ -29,7 +29,7 @@ function EditProductForm({ product, isPending, isError, onSubmit }) {
             }}
             className="space-y-4 mt-4"
           >
-            <label className="input input-bordered flex items-center gap-2 bg-base-200">
+            <label className="input input-bordered flex items-center gap-2 bg-base-200 w-full">
               <TypeIcon className="size-4 text-base-content/50" />
               <input
                 type="text"
@@ -41,7 +41,7 @@ function EditProductForm({ product, isPending, isError, onSubmit }) {
               />
             </label>
 
-            <label className="input input-bordered flex items-center gap-2 bg-base-200">
+            <label className="input input-bordered flex items-center gap-2 bg-base-200 w-full">
               <ImageIcon className="size-4 text-base-content/50" />
               <input
                 type="url"

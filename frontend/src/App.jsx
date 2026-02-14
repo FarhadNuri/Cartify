@@ -1,5 +1,6 @@
 import { SignIn, SignInButton, useUser } from "@clerk/clerk-react";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -18,9 +19,9 @@ function App() {
     return <div>Loading...</div>;
   }
   return (
-  <div className="min-h-screen bg-base-100">
+  <div className="min-h-screen bg-base-100 flex flex-col">
     <Navbar />
-    <main className="max-w-5xl mx-auto px-4 py-8">
+    <main className="max-w-5xl mx-auto px-4 py-8 flex-1 w-full">
       <Routes >
         <Route path="/" element={<HomePage />} />
         <Route path="/product/:id" element={<ProductPage />} />
@@ -29,6 +30,7 @@ function App() {
         <Route path="/edit/:id" element={isSignedIn ? <EditProductPage /> : <Navigate to={"/"} />} />
       </Routes>
     </main>
+    <Footer />
   </div>
   );
 }

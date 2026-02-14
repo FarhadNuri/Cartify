@@ -16,7 +16,7 @@ function CreatePage() {
   };
 
   return (
-    <div className="max-w-lg mx-auto">
+    <div className="max-w-3xl w-full mx-auto px-4 py-16 min-h-[700px]">
       <Link to="/" className="btn btn-ghost btn-sm gap-1 mb-4">
         <ArrowLeftIcon className="size-4" /> Back
       </Link>
@@ -30,7 +30,7 @@ function CreatePage() {
 
           <form onSubmit={handleSubmit} className="space-y-4 mt-4">
             {/* TITLE INPUT */}
-            <label className="input input-bordered flex items-center gap-2 bg-base-200">
+            <label className="input input-bordered flex items-center gap-2 bg-base-200 w-full">
               <TypeIcon className="size-4 text-base-content/50" />
               <input
                 type="text"
@@ -43,7 +43,7 @@ function CreatePage() {
             </label>
 
             {/* IMGURL INPUT */}
-            <label className="input input-bordered flex items-center gap-2 bg-base-200">
+            <label className="input input-bordered flex items-center gap-2 bg-base-200 w-full">
               <ImageIcon className="size-4 text-base-content/50" />
               <input
                 type="url"
