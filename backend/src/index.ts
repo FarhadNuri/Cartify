@@ -1,6 +1,7 @@
 import express from 'express';
 import {ENV} from './config/db.config';
 import { clerkMiddleware } from '@clerk/express'
+import path from 'path';
 import cors from 'cors';
 import userRoutes from './routes/user.route';
 import productRoutes from './routes/product.route';
@@ -27,6 +28,16 @@ app.get('/', (req, res) => {
 app.use("/api/users",userRoutes)
 app.use("/api/products",productRoutes)
 app.use("/api/comments",commentRoutes)
+
+if (ENV.NODE_ENV === "production") {
+  const __dirname = path.resolve();
+
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+  app.get("/{*any}", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+  });
+}
 
 app.listen(ENV.PORT, () => {
   console.log("Server is running on port", ENV.PORT);
