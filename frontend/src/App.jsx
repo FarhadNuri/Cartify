@@ -1,4 +1,4 @@
-import { SignIn, SignInButton } from "@clerk/clerk-react";
+import { SignIn, SignInButton, useUser } from "@clerk/clerk-react";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
@@ -6,8 +6,16 @@ import ProfilePage from "./pages/ProfilePage";
 import CreatePage from "./pages/CreatePage";
 import EditProductPage from "./pages/EditProductPage";
 import {Route,Routes} from "react-router";
+import useUserSync from "./hooks/useUserSync.hook";
+import useAuthReq from "./hooks/useAuthReq.hook";
  
 function App() {
+  const {isClerkLoaded, isSignedIn} = useAuthReq()
+  useUserSync()
+
+  if (!isClerkLoaded) {
+    return <div>Loading...</div>;
+  }
   return (
   <div className="min-h-screen bg-base-100">
     <Navbar />
