@@ -31,11 +31,12 @@ app.use("/api/comments",commentRoutes)
 
 if (ENV.NODE_ENV === "production") {
   const __dirname = path.resolve();
+  const frontendPath = path.join(__dirname, "frontend", "dist");
 
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  app.use(express.static(frontendPath));
 
-  app.get("/{*any}", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(frontendPath, "index.html"));
   });
 }
 
