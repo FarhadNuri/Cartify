@@ -19,12 +19,13 @@ app.use("/api/products",productRoutes)
 app.use("/api/comments",commentRoutes)
 
 if (ENV.NODE_ENV === "production") {
+  // When running from backend/dist/index.js, go up one level to project root
   const __dirname = path.resolve();
-  const frontendPath = path.join(__dirname, "frontend", "dist");
 
-  app.use(express.static(frontendPath));
+  // serve static files from frontend/dist
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-  // Catch-all handler for SPA - must be after API routes
+  // handle SPA routing - send all non-API routes to index.html - react app
   app.get("/{*any}", (req, res) => {
     res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
   });
