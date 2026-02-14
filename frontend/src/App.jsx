@@ -8,6 +8,7 @@ import EditProductPage from "./pages/EditProductPage";
 import {Route,Routes} from "react-router";
 import useUserSync from "./hooks/useUserSync.hook";
 import useAuthReq from "./hooks/useAuthReq.hook";
+import { Navigate } from "react-router";
  
 function App() {
   const {isClerkLoaded, isSignedIn} = useAuthReq()
@@ -22,10 +23,10 @@ function App() {
     <main className="max-w-5xl mx-auto px-4 py-8">
       <Routes >
         <Route path="/" element={<HomePage />} />
-        <Route path="/products" element={<ProductPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/create" element={<CreatePage />} />
-        <Route path="/edit/:id" element={<EditProductPage />} />
+        <Route path="/product/:id" element={<ProductPage />} />
+        <Route path="/profile" element={isSignedIn ? <ProfilePage /> : <Navigate to={"/"} />} />
+        <Route path="/create" element={isSignedIn ? <CreatePage /> : <Navigate to={"/"} />} />
+        <Route path="/edit/:id" element={isSignedIn ? <EditProductPage /> : <Navigate to={"/"} />} />
       </Routes>
     </main>
   </div>
