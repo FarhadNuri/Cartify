@@ -1,7 +1,6 @@
 import express from 'express';
 import {ENV} from './config/db.config';
 import { clerkMiddleware } from '@clerk/express'
-import path from 'path';
 import cors from 'cors';
 import userRoutes from './routes/user.route';
 import productRoutes from './routes/product.route';
@@ -20,11 +19,27 @@ app.use(clerkMiddleware())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// API Routes
 app.use("/api/users",userRoutes)
 app.use("/api/products",productRoutes)
 app.use("/api/comments",commentRoutes)
 
-app.get('/api', (req, res) => {
+// Health check endpoints
+app.get('/', (_req, res) => {
+  res.json({ 
+    message: 'Cartify API is running',
+    status: 'healthy',
+    environment: ENV.NODE_ENV,
+    endpoints: {
+      health: '/api',
+      users: '/api/users',
+      products: '/api/products',
+      comments: '/api/comments'
+    }
+  });
+});
+
+app.get('/api', (_req, res) => {
   res.json({ 
     message: 'API is running',
     environment: ENV.NODE_ENV,
