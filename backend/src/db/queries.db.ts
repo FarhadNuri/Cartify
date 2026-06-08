@@ -4,7 +4,6 @@ import { users, products, comments } from "./schema.db";
 import { type NewUser, type NewProduct, type NewComment } from "./schema.db";
 
 
-// User Queries
 
 export async function createUser(data: NewUser) {
     const [user] = await db.insert(users).values(data).returning();
@@ -24,15 +23,6 @@ export async function updateUser(id:string, data: Partial<NewUser>) {
     return user;
 }
 
-//upsert = update if exists, else create
-// export const upsertUser = async (data: NewUser) => {
-//     const existingUser = await getUserById(data.id);
-//     if (existingUser) {
-//         return updateUser(data.id, data);
-//     } else {
-//         return createUser(data);
-//     }
-// }
 
 export async function upsertUser(data: NewUser) {
     const [user] = await db.insert(users).values(data).onConflictDoUpdate({
@@ -47,7 +37,7 @@ export async function upsertUser(data: NewUser) {
     return user;    
 }
 
-// Product Queries
+
 export async function createProduct(data:NewProduct) {
     const [product] = await db.insert(products).values(data).returning();
     return product;
@@ -57,9 +47,6 @@ export async function getAllProducts() {
     return db.query.products.findMany({
         with: {user: true},
         orderBy: (products,{desc}) => [desc(products.createdAt)]
-        // see latest products first
-        // square brackets = array of order conditions
-        // orderBy expects an array
 
     });
 } 
